@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2D4EAA5B-62B2-49B3-8484-DAE17EB66E20}</ProjectGuid>
+    <RootNamespace>DICOMViewer</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>DicomRenderingViewer</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="VTK-8.0.0_x64.props" />
+    <Import Project="GDCM-2.8.0.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="VTK-8.0.0_x64.props" />
+    <Import Project="GDCM-2.8.0.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files\MySQL\MySQL Server 8.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\MySQL\MySQL Server 8.0\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files\MySQL\MySQL Server 8.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\MySQL\MySQL Server 8.0\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>vtkalglib-8.0.lib;vtkChartsCore-8.0.lib;vtkCommonColor-8.0.lib;vtkCommonComputationalGeometry-8.0.lib;vtkCommonCore-8.0.lib;vtkCommonDataModel-8.0.lib;vtkCommonExecutionModel-8.0.lib;vtkCommonMath-8.0.lib;vtkCommonMisc-8.0.lib;vtkCommonSystem-8.0.lib;vtkCommonTransforms-8.0.lib;vtkDICOMParser-8.0.lib;vtkDomainsChemistry-8.0.lib;vtkexoIIc-8.0.lib;vtkexpat-8.0.lib;vtkFiltersAMR-8.0.lib;vtkFiltersCore-8.0.lib;vtkFiltersExtraction-8.0.lib;vtkFiltersFlowPaths-8.0.lib;vtkFiltersGeneral-8.0.lib;vtkFiltersGeneric-8.0.lib;vtkFiltersGeometry-8.0.lib;vtkFiltersHybrid-8.0.lib;vtkFiltersHyperTree-8.0.lib;vtkFiltersImaging-8.0.lib;vtkFiltersModeling-8.0.lib;vtkFiltersParallel-8.0.lib;vtkFiltersParallelImaging-8.0.lib;vtkFiltersPoints-8.0.lib;vtkFiltersProgrammable-8.0.lib;vtkFiltersSelection-8.0.lib;vtkFiltersSMP-8.0.lib;vtkFiltersSources-8.0.lib;vtkFiltersStatistics-8.0.lib;vtkFiltersTexture-8.0.lib;vtkFiltersTopology-8.0.lib;vtkFiltersVerdict-8.0.lib;vtkfreetype-8.0.lib;vtkGeovisCore-8.0.lib;vtkgl2ps-8.0.lib;vtkhdf5-8.0.lib;vtkhdf5_hl-8.0.lib;vtkImagingColor-8.0.lib;vtkImagingCore-8.0.lib;vtkImagingFourier-8.0.lib;vtkImagingGeneral-8.0.lib;vtkImagingHybrid-8.0.lib;vtkImagingMath-8.0.lib;vtkImagingMorphological-8.0.lib;vtkImagingSources-8.0.lib;vtkImagingStatistics-8.0.lib;vtkImagingStencil-8.0.lib;vtkInfovisCore-8.0.lib;vtkInfovisLayout-8.0.lib;vtkInteractionImage-8.0.lib;vtkInteractionStyle-8.0.lib;vtkInteractionWidgets-8.0.lib;vtkIOAMR-8.0.lib;vtkIOCore-8.0.lib;vtkIOEnSight-8.0.lib;vtkIOExodus-8.0.lib;vtkIOExport-8.0.lib;vtkIOExportOpenGL-8.0.lib;vtkIOGeometry-8.0.lib;vtkIOImage-8.0.lib;vtkIOImport-8.0.lib;vtkIOInfovis-8.0.lib;vtkIOLegacy-8.0.lib;vtkIOLSDyna-8.0.lib;vtkIOMINC-8.0.lib;vtkIOMovie-8.0.lib;vtkIONetCDF-8.0.lib;vtkIOParallel-8.0.lib;vtkIOParallelXML-8.0.lib;vtkIOPLY-8.0.lib;vtkIOSQL-8.0.lib;vtkIOTecplotTable-8.0.lib;vtkIOVideo-8.0.lib;vtkIOXML-8.0.lib;vtkIOXMLParser-8.0.lib;vtkjpeg-8.0.lib;vtkjsoncpp-8.0.lib;vtklibharu-8.0.lib;vtklibxml2-8.0.lib;vtkLocalExample-8.0.lib;vtklz4-8.0.lib;vtkmetaio-8.0.lib;vtkNetCDF-8.0.lib;vtknetcdf_c++.lib;vtkoggtheora-8.0.lib;vtkParallelCore-8.0.lib;vtkpng-8.0.lib;vtkproj4-8.0.lib;vtkRenderingAnnotation-8.0.lib;vtkRenderingContext2D-8.0.lib;vtkRenderingContextOpenGL-8.0.lib;vtkRenderingCore-8.0.lib;vtkRenderingFreeType-8.0.lib;vtkRenderingGL2PS-8.0.lib;vtkRenderingImage-8.0.lib;vtkRenderingLabel-8.0.lib;vtkRenderingLIC-8.0.lib;vtkRenderingLOD-8.0.lib;vtkRenderingOpenGL-8.0.lib;vtkRenderingParallel-8.0.lib;vtkRenderingVolume-8.0.lib;vtkRenderingVolumeOpenGL-8.0.lib;vtksqlite-8.0.lib;vtksys-8.0.lib;vtktiff-8.0.lib;vtkverdict-8.0.lib;vtkViewsContext2D-8.0.lib;vtkViewsCore-8.0.lib;vtkViewsInfovis-8.0.lib;vtkzlib-8.0.lib;gdcmcharls.lib;gdcmCommon.lib;gdcmDICT.lib;gdcmDSED.lib;gdcmexpat.lib;gdcmgetopt.lib;gdcmIOD.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmjpeg8.lib;gdcmMEXD.lib;gdcmMSFF.lib;gdcmopenjp2.lib;gdcmzlib.lib;socketxx.lib;vtkgdcm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>vtkalglib-8.0.dll;vtkChartsCore-8.0.dll;vtkCommonColor-8.0.dll;vtkCommonComputationalGeometry-8.0.dll;vtkCommonCore-8.0.dll;vtkCommonDataModel-8.0.dll;vtkCommonExecutionModel-8.0.dll;vtkCommonMath-8.0.dll;vtkCommonMisc-8.0.dll;vtkCommonSystem-8.0.dll;vtkCommonTransforms-8.0.dll;vtkDICOMParser-8.0.dll;vtkDomainsChemistry-8.0.dll;vtkexoIIc-8.0.dll;vtkexpat-8.0.dll;vtkFiltersAMR-8.0.dll;vtkFiltersCore-8.0.dll;vtkFiltersExtraction-8.0.dll;vtkFiltersFlowPaths-8.0.dll;vtkFiltersGeneral-8.0.dll;vtkFiltersGeneric-8.0.dll;vtkFiltersGeometry-8.0.dll;vtkFiltersHybrid-8.0.dll;vtkFiltersHyperTree-8.0.dll;vtkFiltersImaging-8.0.dll;vtkFiltersModeling-8.0.dll;vtkFiltersParallel-8.0.dll;vtkFiltersParallelImaging-8.0.dll;vtkFiltersPoints-8.0.dll;vtkFiltersProgrammable-8.0.dll;vtkFiltersSelection-8.0.dll;vtkFiltersSMP-8.0.dll;vtkFiltersSources-8.0.dll;vtkFiltersStatistics-8.0.dll;vtkFiltersTexture-8.0.dll;vtkFiltersTopology-8.0.dll;vtkFiltersVerdict-8.0.dll;vtkfreetype-8.0.dll;vtkGeovisCore-8.0.dll;vtkgl2ps-8.0.dll;vtkhdf5-8.0.dll;vtkhdf5_hl-8.0.dll;vtkImagingColor-8.0.dll;vtkImagingCore-8.0.dll;vtkImagingFourier-8.0.dll;vtkImagingGeneral-8.0.dll;vtkImagingHybrid-8.0.dll;vtkImagingMath-8.0.dll;vtkImagingMorphological-8.0.dll;vtkImagingSources-8.0.dll;vtkImagingStatistics-8.0.dll;vtkImagingStencil-8.0.dll;vtkInfovisCore-8.0.dll;vtkInfovisLayout-8.0.dll;vtkInteractionImage-8.0.dll;vtkInteractionStyle-8.0.dll;vtkInteractionWidgets-8.0.dll;vtkIOAMR-8.0.dll;vtkIOCore-8.0.dll;vtkIOEnSight-8.0.dll;vtkIOExodus-8.0.dll;vtkIOExport-8.0.dll;vtkIOExportOpenGL-8.0.dll;vtkIOGeometry-8.0.dll;vtkIOImage-8.0.dll;vtkIOImport-8.0.dll;vtkIOInfovis-8.0.dll;vtkIOLegacy-8.0.dll;vtkIOLSDyna-8.0.dll;vtkIOMINC-8.0.dll;vtkIOMovie-8.0.dll;vtkIONetCDF-8.0.dll;vtkIOParallel-8.0.dll;vtkIOParallelXML-8.0.dll;vtkIOPLY-8.0.dll;vtkIOSQL-8.0.dll;vtkIOTecplotTable-8.0.dll;vtkIOVideo-8.0.dll;vtkIOXML-8.0.dll;vtkIOXMLParser-8.0.dll;vtkjpeg-8.0.dll;vtkjsoncpp-8.0.dll;vtklibharu-8.0.dll;vtklibxml2-8.0.dll;vtkLocalExample-8.0.dll;vtklz4-8.0.dll;vtkmetaio-8.0.dll;vtkNetCDF-8.0.dll;vtknetcdf_c++.dll;vtkoggtheora-8.0.dll;vtkParallelCore-8.0.dll;vtkpng-8.0.dll;vtkproj4-8.0.dll;vtkRenderingAnnotation-8.0.dll;vtkRenderingContext2D-8.0.dll;vtkRenderingContextOpenGL-8.0.dll;vtkRenderingCore-8.0.dll;vtkRenderingFreeType-8.0.dll;vtkRenderingGL2PS-8.0.dll;vtkRenderingImage-8.0.dll;vtkRenderingLabel-8.0.dll;vtkRenderingLIC-8.0.dll;vtkRenderingLOD-8.0.dll;vtkRenderingOpenGL-8.0.dll;vtkRenderingParallel-8.0.dll;vtkRenderingVolume-8.0.dll;vtkRenderingVolumeOpenGL-8.0.dll;vtksys-8.0.dll;vtktiff-8.0.dll;vtkverdict-8.0.dll;vtkViewsContext2D-8.0.dll;vtkViewsCore-8.0.dll;vtkViewsInfovis-8.0.dll;vtkzlib-8.0.dll;concrt140.dll;gdcmcharls.dll;gdcmCommon.dll;gdcmDICT.dll;gdcmDSED.dll;gdcmexpat.dll;gdcmgetopt.dll;gdcmIOD.dll;gdcmjpeg12.dll;gdcmjpeg16.dll;gdcmjpeg8.dll;gdcmMEXD.dll;gdcmMSFF.dll;gdcmopenjp2.dll;gdcmzlib.dll;msvcp140.dll;socketxx.dll;vcruntime140.dll;vtkgdcm.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChildView.h" />
+    <ClInclude Include="DicomGroup.h" />
+    <ClInclude Include="DicomGroupView.h" />
+    <ClInclude Include="DicomLoader.h" />
+    <ClInclude Include="DICOMViewer.h" />
+    <ClInclude Include="DlgVtkView.h" />
+    <ClInclude Include="DVManager.h" />
+    <ClInclude Include="LoginDlg.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="VolumeData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChildView.cpp" />
+    <ClCompile Include="DicomGroup.cpp" />
+    <ClCompile Include="DicomGroupView.cpp" />
+    <ClCompile Include="DicomLoader.cpp" />
+    <ClCompile Include="DICOMViewer.cpp" />
+    <ClCompile Include="DlgVtkView.cpp" />
+    <ClCompile Include="DVManager.cpp" />
+    <ClCompile Include="LoginDlg.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="VolumeData.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DICOMViewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\buttons.bmp" />
+    <Image Include="res\DICOMViewer.ico" />
+    <Image Include="res\filelarge.bmp" />
+    <Image Include="res\filesmall.bmp" />
+    <Image Include="res\main.bmp" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\writelarge.bmp" />
+    <Image Include="res\writesmall.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\DICOMViewer.rc2" />
+    <None Include="res\ribbon.mfcribbon-ms" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="DICOMViewer.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
