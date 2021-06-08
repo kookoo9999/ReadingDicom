@@ -16,6 +16,7 @@
 #include "DicomGroup.h"
 
 
+
 DicomLoader::DicomLoader()
 {
 }
@@ -41,6 +42,7 @@ void DicomLoader::OpenDicomDirectory( const char* dirPath )
 			AddDicomFile( filePath.c_str() );
 		}
 	}
+	
 }
 
 void DicomLoader::AddDicomFile( const char *filePath )

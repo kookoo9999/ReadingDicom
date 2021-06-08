@@ -270,6 +270,8 @@ void CMainFrame::OnOpenDicomFolder()
 
 		/// DICOM 그룹 트리 업데이트
 		m_DicomGroupView.UpdateDicomTree();
+
+
 	}
 }
 
@@ -283,6 +285,7 @@ void CMainFrame::OnComboVolumeRenderMode()
 
 	// 콤보박스에서 선택된 인덱스
 	int selectedIdx = volumeModeComboBox->GetCurSel();
+	TRACE("selectdIDX = %d ",selectedIdx);
 
 	// Volume 렌더링 모드 변경
 	DVManager::Mgr()->ChangeVolumeRenderMode( selectedIdx );
