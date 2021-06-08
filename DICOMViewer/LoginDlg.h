@@ -42,4 +42,5 @@ public:
 	CString m_LoginPW;
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	virtual BOOL OnInitDialog();
 };

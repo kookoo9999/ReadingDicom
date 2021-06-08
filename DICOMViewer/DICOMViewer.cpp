@@ -70,7 +70,8 @@ BOOL CDICOMViewerApp::InitInstance()
 	if (dlg.DoModal() != IDOK) {
 		return FALSE;
 	}
-
+	
+	
 	
 
 	INITCOMMONCONTROLSEX InitCtrls;
@@ -117,6 +118,7 @@ BOOL CDICOMViewerApp::InitInstance()
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
 		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+	
 	
 
 	// 주 창을 만들기 위해 이 코드에서는 새 프레임 창 개체를
