@@ -358,12 +358,12 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "DICOMViewer"
+    IDR_MAINFRAME           "Planner Clinics"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_APP_TITLE       "DICOMViewer"
+    AFX_IDS_APP_TITLE       "Planner Clinics"
     AFX_IDS_IDLEMESSAGE     "¡ÿ∫Ò"
 END
 

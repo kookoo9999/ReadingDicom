@@ -133,7 +133,7 @@ BOOL CDICOMViewerApp::InitInstance()
 	pFrame->LoadFrame(IDR_MAINFRAME,
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, NULL,
 		NULL);
-	pFrame->SetWindowText(_T("DicomRenderingViewer"));
+	//pFrame->SetWindowText(_T("Planner Clinics"));
 	//LoginDlg dlg;
 	
 	

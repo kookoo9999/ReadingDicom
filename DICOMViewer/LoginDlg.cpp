@@ -431,7 +431,7 @@ void LoginDlg::OnBnClickedOk()
 			}
 			strMac.Format(_T("%0.2X-%0.2X-%0.2X-%0.2X-%0.2X-%0.2X"), Info->Address[0], Info->Address[1], Info->Address[2], Info->Address[3], Info->Address[4], Info->Address[5]);
 			//AfxMessageBox(strMac);
-
+			TRACE1("This PC's MAC : %s \n", strMac);
 			//------------------Mac값 유무 확인----------------------------------
 
 			CString checkMAC; //mac존재확인 쿼리
