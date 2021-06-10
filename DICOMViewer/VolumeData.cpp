@@ -51,7 +51,7 @@ void VolumeData::ReadyForVolumeRendering()
 	m_VolumeRendering->SetUserTransform( userTransform );
 
 	//렌더링 모드 준비
-	SetCurrentPresetMode( SKIN );
+	SetCurrentPresetMode( BONE );
 }
 
 void VolumeData::SetCurrentPresetMode( int val )
@@ -71,6 +71,8 @@ void VolumeData::SetCurrentPresetMode( int val )
 	double scalarRange[2];
 	//AfxMessageBox(scalarRange[0]);
 	//AfxMessageBox(scalarRange[1]);
+	TRACE1("scalarRange[0] = %lf", scalarRange[0]);
+	TRACE1("scalarRange[1] = %lf", scalarRange[1]);
 	m_ImageData->GetScalarRange( scalarRange );
 	double nMin= scalarRange[0];
 	double nMax= scalarRange[1];
@@ -128,7 +130,7 @@ void VolumeData::SetCurrentPresetMode( int val )
 		m_OpacityFunc->AddPoint( 384.35, 0.83 );
 		m_OpacityFunc->AddPoint( nMax, 0.83 );
 
-		TRACE("nMin=%lf , nMax=%lf \n", nMin, nMax);
+		TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
 		//TRACE(_T("\n"));
 		//AfxMessageBox(nMin);
 		//AfxMessageBox(nMax);
@@ -154,6 +156,9 @@ void VolumeData::ReadyForSliceRendering()
 	// DICOM 이미지 최대/최소 밝기값
 	double range[2];
 	m_ImageData->GetScalarRange( range );
+	TRACE("Light of DICOM Image range0 : %lf \n ", range[0]);
+	TRACE("Light of DICOM Image range1 : %lf \n ", range[1]);
+	TRACE("Light of DICOM Image range2 : %lf \n ", range[2]);
 	// Volume 인덱스 범위
 	int ext[6];
 	m_ImageData->GetExtent( ext );
@@ -180,12 +185,12 @@ void VolumeData::ReadyForSliceRendering()
 		case CORONAL:
 			m_SliceIndex[sliceType] = (ext[2] + ext[3]) / 2;
 			//m_SliceIndex[sliceType] = (ext[2] + ext[1]) / 2;
-			TRACE1("Coronal Idx = %d", m_SliceIndex[CORONAL]);
+			TRACE1("Coronal Idx = %d ", m_SliceIndex[CORONAL]);
 			TRACE(_T("\n"));
 			break;
 		case SAGITTAL:
 			m_SliceIndex[sliceType] = (ext[0] + ext[1]) / 2;
-			TRACE1("Sagittal Idx = %d", m_SliceIndex[SAGITTAL]);
+			TRACE1("Sagittal Idx = %d ", m_SliceIndex[SAGITTAL]);
 			TRACE(_T("\n"));
 			break;
 		}
@@ -243,12 +248,15 @@ vtkSmartPointer<vtkMatrix4x4> VolumeData::GetResliceMatrix( int sliceType, int s
 	double origin[3];
 	double bounds[6];
 	int ext[6];
-	m_ImageData->GetOrigin( origin );		// Volume 원점
-	m_ImageData->GetBounds( bounds );	// Volume 위치 범위
-	m_ImageData->GetExtent( ext );			// Volume 인덱스 범위
+	m_ImageData->GetOrigin( origin );	          	// Volume 원점
+	m_ImageData->GetBounds( bounds );				// Volume 위치 범위
+	m_ImageData->GetExtent( ext );					// Volume 인덱스 범위
 
 	for (int i = 0; i < 3; i++) { 
-		TRACE1("origin[%d] = %lf", i, origin[i]); 
+		TRACE2("origin[%d] = %lf \n",i, origin[i]);
+		/*TRACE1("origin[0] = %lf \n",  origin[0]); 
+		TRACE1("origin[1] = %lf \n", origin[1]);
+		TRACE1("origin[2] = %lf \n", origin[2]);*/
 	}
 	// Slice 행렬의 위치를 원점으로 초기화
 	for( int i = 0; i < 3; i++ ) mat->SetElement( i, 3, origin[i] );
@@ -262,7 +270,7 @@ vtkSmartPointer<vtkMatrix4x4> VolumeData::GetResliceMatrix( int sliceType, int s
 		if( sliceIdx > ext[5] ) sliceIdx = ext[5];
 		// slice 인덱스의 실제 위치 계산
 		pos = bounds[4] + (bounds[5] - bounds[4]) * (double)(sliceIdx / (double)ext[5]);
-		TRACE1("Axial->pos : %lf", pos);
+		TRACE1("Axial->pos : %lf \n", pos);
 		// z축 위치를 해당하는 slice 인덱스의 위치로 설정
 		mat->SetElement( 2, 3, pos );
 		break;
@@ -272,7 +280,7 @@ vtkSmartPointer<vtkMatrix4x4> VolumeData::GetResliceMatrix( int sliceType, int s
 		if( sliceIdx > ext[3] ) sliceIdx = ext[3];
 		// slice 인덱스의 실제 위치 계산
 		pos = bounds[2] + (bounds[3] - bounds[2]) * (double)(sliceIdx / (double)ext[3]);
-		TRACE("Coronal->pos : %lf", pos);
+		TRACE("Coronal->pos : %lf \n", pos);
 		// y축 위치를 해당하는 slice 인덱스의 위치로 설정
 		mat->SetElement( 1, 3, pos );
 		break;

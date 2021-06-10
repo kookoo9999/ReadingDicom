@@ -372,6 +372,7 @@ void LoginDlg::OnBnClickedOk()
 	{
 		//DB연결실패
 		AfxMessageBox(LP(mysql_error(&mysql)), MB_OK); //실패시 에러메시지
+		
 
 	}
 
@@ -381,7 +382,7 @@ void LoginDlg::OnBnClickedOk()
 	{
 		//DB연결 성공시
 		mysql_query(&mysql, "set names euckr"); //한글 인식
-		
+		TRACE("DB Connect Success \n");
 		//AfxMessageBox(_T("DB 연결 성공"), MB_OK);
 
 		CString query_edit_mac; //mac주소 찾은값 db에 추가하는 쿼리
@@ -406,6 +407,7 @@ void LoginDlg::OnBnClickedOk()
 		{
 			//mysql_free_result(m_res); //결과에 할당된 메모리 해제
 			//AfxMessageBox(_T("ID,PW 일치"));
+			TRACE("ID & PW correct \n");
 
 			//-----------------------여기서 Mac값 추출---------------------------------------
 
@@ -449,6 +451,7 @@ void LoginDlg::OnBnClickedOk()
 			{
 				//mysql_free_result(m_res); //결과에 할당된 메모리 해제
 				//AfxMessageBox(_T("등록된 MAC이 있습니다"));
+				TRACE("MAC is exist");
 
 				CString compareMAC; //Mac주소 비교하는 쿼리
 				compareMAC.Format(_T("select * from g5_member where mb_10 = '%s' and mb_id = '%s'"), strMac, edit_id);
@@ -463,11 +466,13 @@ void LoginDlg::OnBnClickedOk()
 				if (lcount == 0)
 				{
 					AfxMessageBox(_T("계정에 등록된 주소와 일치하지 않습니다."));
+					TRACE("MAC is different \n");
 				}
 				//else AfxMessageBox(_T("MAC이 일치합니다."));
 				else 
 				{
 					mysql_close(&mysql);
+					TRACE("MAC Address is true \n");
 					AfxMessageBox(_T("환영합니다"));
 					CDialogEx::OnOK();
 				}
@@ -478,6 +483,7 @@ void LoginDlg::OnBnClickedOk()
 
 
 				//단계확인용
+				TRACE("MAC is different \n");
 				AfxMessageBox(_T("처음 접속하셨으므로 주소등록을 진행합니다.\n     다른 환경에서 접속할 수 없습니다."));
 
 				query_edit_mac.Format(_T("update g5_member set mb_10 = '%s' where mb_id='%s'"), strMac, edit_id);
@@ -518,6 +524,7 @@ void LoginDlg::OnBnClickedOk()
 		else
 		{
 			//AfxMessageBox(_T("로그인실패\n"));
+			TRACE("ID or PW is different \n");
 			AfxMessageBox(_T("계정 또는 비밀번호를 확인해주세요"));
 			mysql_close(&mysql);
 		}
