@@ -230,11 +230,16 @@
     <ResourceCompile Include="DICOMViewer.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\user2\Downloads\병원아이콘-1,병원아이콘-2,병원아이콘-3\hospital.bmp" />
+    <Image Include="..\..\..\user2\Downloads\병원아이콘-1,병원아이콘-2,병원아이콘-3\병원아이콘-2.bmp" />
+    <Image Include="..\..\..\user2\Downloads\병원아이콘.ico" />
+    <Image Include="res\bitmap4.bmp" />
     <Image Include="res\buttons.bmp" />
     <Image Include="res\DICOMViewer.ico" />
     <Image Include="res\filelarge.bmp" />
     <Image Include="res\filesmall.bmp" />
     <Image Include="res\main.bmp" />
+    <Image Include="res\picture.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\Toolbar256.bmp" />
     <Image Include="res\writelarge.bmp" />

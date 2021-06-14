@@ -37,6 +37,10 @@
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON                      307
 #define IDD_DIALOG_LOGIN                311
+#define IDB_BITMAP1                     316
+#define IDB_BITMAP2                     317
+#define IDB_BITMAP3                     321
+#define IDB_BITMAP4                     326
 #define IDC_EDIT_LGID                   1000
 #define IDC_EDIT_LGPW                   1001
 #define IDC_DB_CON_TEST                 1004
@@ -53,7 +57,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        315
+#define _APS_NEXT_RESOURCE_VALUE        327
 #define _APS_NEXT_COMMAND_VALUE         32775
 #define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           310
