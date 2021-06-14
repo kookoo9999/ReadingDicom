@@ -99,9 +99,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\buttons.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="res\filelarge.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -127,15 +124,6 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\user2\Downloads\병원아이콘.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\user2\Downloads\병원아이콘-1,병원아이콘-2,병원아이콘-3\병원아이콘-2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\..\..\user2\Downloads\병원아이콘-1,병원아이콘-2,병원아이콘-3\hospital.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\bitmap4.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\picture.bmp">
