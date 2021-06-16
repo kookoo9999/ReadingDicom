@@ -3,7 +3,7 @@
 
 VolumeData::VolumeData()
 {
-	m_CurrentPresetMode = BONE;
+	m_CurrentPresetMode = MIP;
 
 	for( int i = 0; i < 3; i++ ) m_SliceIndex[i] = 0;
 }
@@ -22,18 +22,26 @@ void VolumeData::ReadyForVolumeRendering()
 	// 투명도 함수, 컬러 함수 준비
 	double scalarRange[2];
 	m_ImageData->GetScalarRange( scalarRange );
+	TRACE2("scalar[0] = %lf scalar[1] = %lf \n", scalarRange[0], scalarRange[1]);
 	m_OpacityFunc = vtkSmartPointer<vtkPiecewiseFunction>::New();
-	m_OpacityFunc->AdjustRange( scalarRange );
+	//m_OpacityFunc->AdjustRange( scalarRange );
 	m_ColorFunc = vtkSmartPointer<vtkColorTransferFunction>::New();
 	
 	// Volume 속성 준비
 	vtkSmartPointer<vtkVolumeProperty> volumeProperty = 
 		vtkSmartPointer<vtkVolumeProperty>::New();
-	volumeProperty->SetScalarOpacity( m_OpacityFunc );
-	volumeProperty->SetColor( m_ColorFunc );
+	
+	volumeProperty->SetColor(0 ,m_ColorFunc );
 	volumeProperty->ShadeOn();
 	volumeProperty->SetInterpolationTypeToLinear();
 
+	//0616 수정
+	volumeProperty->SetDiffuse(0.7);
+	volumeProperty->SetSpecular(0.3);
+	volumeProperty->SetSpecularPower(30.0);
+	volumeProperty->SetScalarOpacity(0, m_OpacityFunc);
+	
+	
 	// Volume 회전 변환 
 	double origin[3];
 	m_ImageData->GetOrigin( origin );
@@ -51,7 +59,7 @@ void VolumeData::ReadyForVolumeRendering()
 	m_VolumeRendering->SetUserTransform( userTransform );
 
 	//렌더링 모드 준비
-	SetCurrentPresetMode( BONE );
+	SetCurrentPresetMode( MIP );
 }
 
 void VolumeData::SetCurrentPresetMode( int val )
@@ -71,12 +79,17 @@ void VolumeData::SetCurrentPresetMode( int val )
 	double scalarRange[2];
 	//AfxMessageBox(scalarRange[0]);
 	//AfxMessageBox(scalarRange[1]);
-	TRACE1("scalarRange[0] = %lf", scalarRange[0]);
-	TRACE1("scalarRange[1] = %lf", scalarRange[1]);
+	
 	m_ImageData->GetScalarRange( scalarRange );
+	TRACE1("scalarRange[0] = %lf \n", scalarRange[0]);
+	TRACE1("scalarRange[1] = %lf \n", scalarRange[1]);
 	double nMin= scalarRange[0];
 	double nMax= scalarRange[1];
 	TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
+
+	double fTerm = nMax - nMin;
+	double c1_pos = 0.5;
+
 	// 초기화
 	m_ColorFunc->RemoveAllPoints();
 	m_OpacityFunc->RemoveAllPoints();
@@ -84,17 +97,43 @@ void VolumeData::SetCurrentPresetMode( int val )
 	// 투명도 함수 및 컬러 함수 설정
 	switch( m_CurrentPresetMode ) {
 	case MIP:
+		TRACE("MIP MODE\n");
 		// 최대 밝기값 기준 연속적인 투명도 함수 설정
- 		m_ColorFunc->AddRGBPoint( nMin, 1.0, 1.0, 1.0 );
+
+
+		m_OpacityFunc->AddPoint(nMin, 0.0);
+		//m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
+		m_OpacityFunc->AddPoint(nMax, 1.0);
+
+		/*const int nCountItem_CTF = 4;
+		double fbase[nCountItem_CTF];
+		for (int i = 0; i < nCountItem_CTF; i++)
+		{
+			fbase[i] = nMin + fTerm * i * 0.25; // 25% 씩 증가.
+		}
+		double col[nCountItem_CTF][3] =
+		{
+		{ 0.0, 0.0, 0.0 }, { 0.7, 0.4, 0.1 },
+		{ 0.6, 0.5, 0.3 }, { 1.0, 1.0, 1.0 }
+		};
+	
+		for (int i = 0; i < nCountItem_CTF; i++)
+			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);
+			*/
+
+
+		m_ColorFunc->AddRGBPoint( nMin, 1.0, 1.0, 1.0 );
  		m_ColorFunc->AddRGBPoint( nMax, 1.0, 1.0, 1.0 );
-		
-		m_OpacityFunc->AddPoint( nMin, 0.0 );
-		m_OpacityFunc->AddPoint( nMax, 1.0 );
+			   
+		/*m_OpacityFunc->AddPoint(nMin, 0.0);
+		m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
+		m_OpacityFunc->AddPoint(nMax, 1.0);*/
 
 		// 최대 밝기 모드로 블렌드 모드 설정
 		volumeMapper->SetBlendModeToMaximumIntensity();
 		break;
 	case SKIN:
+		TRACE("SKIN MODE \n");
 		// 피부가 잘 보이는 밝기 값에 대해 색 및 투명도 설정
 		m_ColorFunc->AddRGBPoint( nMin, 0, 0, 0 );
 		m_ColorFunc->AddRGBPoint( -1000, .62, .36, .18 );
@@ -105,7 +144,7 @@ void VolumeData::SetCurrentPresetMode( int val )
 		m_OpacityFunc->AddPoint( -1000, 0, 0.5, 0.0 );
 		m_OpacityFunc->AddPoint( -500, 1.0, 0.33, 0.45 );
 		m_OpacityFunc->AddPoint( nMax, 1.0, 0.5, 0.0 );
-
+		
 		TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
 		//AfxMessageBox(nMin);
 		//AfxMessageBox(nMax);
@@ -121,6 +160,22 @@ void VolumeData::SetCurrentPresetMode( int val )
 		m_ColorFunc->AddRGBPoint( 217.24, 0.97, 0.81, 0.61 );
 		m_ColorFunc->AddRGBPoint( 384.35, 0.91, 0.91, 1.0 );
 		m_ColorFunc->AddRGBPoint( nMax, 1, 1, 1 );
+		TRACE("BONE MODE \n ");
+		/*const int nCountItem_CTF = 4;
+		double fbase[nCountItem_CTF];
+		for (int i = 0; i < nCountItem_CTF; i++)
+		{
+			fbase[i] = nMin + fTerm * i * 0.25; // 25% 씩 증가.
+		}
+		double col[nCountItem_CTF][3] =
+		{
+		{ 0.0, 0.0, 0.0 }, { 0.7, 0.4, 0.1 },
+		{ 0.6, 0.5, 0.3 }, { 1.0, 1.0, 1.0 }
+		};
+		// CTF 설정
+		//C_VTK(vtkColorTransferFunction, CTF1);
+		for (int i = 0; i < nCountItem_CTF; i++)
+			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);*/		
 
 		m_OpacityFunc->AddPoint( nMin, 0.0 );
 		m_OpacityFunc->AddPoint( 142.68, 0.0 );
@@ -129,6 +184,10 @@ void VolumeData::SetCurrentPresetMode( int val )
 		m_OpacityFunc->AddPoint( 217.24, 0.78 );
 		m_OpacityFunc->AddPoint( 384.35, 0.83 );
 		m_OpacityFunc->AddPoint( nMax, 0.83 );
+
+		/*m_OpacityFunc->AddPoint(nMin, 0.0);
+		m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
+		m_OpacityFunc->AddPoint(nMax, 1.0);*/
 
 		TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
 		//TRACE(_T("\n"));

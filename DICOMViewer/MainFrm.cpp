@@ -285,7 +285,7 @@ void CMainFrame::OnComboVolumeRenderMode()
 
 	// 콤보박스에서 선택된 인덱스
 	int selectedIdx = volumeModeComboBox->GetCurSel();
-	TRACE("selectdIDX = %d ",selectedIdx);
+	TRACE("selectdIDX = %d \n",selectedIdx);
 
 	// Volume 렌더링 모드 변경
 	DVManager::Mgr()->ChangeVolumeRenderMode( selectedIdx );
