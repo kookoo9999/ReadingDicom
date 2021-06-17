@@ -13,56 +13,7 @@ VolumeData::~VolumeData()
 {
 }
 
-void VolumeData::ReadyForVolumeRendering()
-{
-	// Volume Mapper 준비
-	vtkSmartPointer<vtkSmartVolumeMapper> smartMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-	smartMapper->SetInputData( m_ImageData );
-
-	// 투명도 함수, 컬러 함수 준비
-	double scalarRange[2];
-	m_ImageData->GetScalarRange( scalarRange );
-	TRACE2("scalar[0] = %lf scalar[1] = %lf \n", scalarRange[0], scalarRange[1]);
-	m_OpacityFunc = vtkSmartPointer<vtkPiecewiseFunction>::New();
-	//m_OpacityFunc->AdjustRange( scalarRange );
-	m_ColorFunc = vtkSmartPointer<vtkColorTransferFunction>::New();
-	
-	// Volume 속성 준비
-	vtkSmartPointer<vtkVolumeProperty> volumeProperty = 
-		vtkSmartPointer<vtkVolumeProperty>::New();
-	
-	volumeProperty->SetColor(0 ,m_ColorFunc );
-	volumeProperty->ShadeOn();
-	volumeProperty->SetInterpolationTypeToLinear();
-
-	//0616 수정
-	volumeProperty->SetDiffuse(0.7);
-	volumeProperty->SetSpecular(0.3);
-	volumeProperty->SetSpecularPower(30.0);
-	volumeProperty->SetScalarOpacity(0, m_OpacityFunc);
-	
-	
-	// Volume 회전 변환 
-	double origin[3];
-	m_ImageData->GetOrigin( origin );
-	vtkSmartPointer<vtkTransform> userTransform = 
-		vtkSmartPointer<vtkTransform>::New();
-	userTransform->Translate( origin );
-	userTransform->Concatenate( GetOrientation() );
-	userTransform->Translate( -origin[0], -origin[1], -origin[2] );
-	userTransform->Update();
-
-	// Volume 렌더링 객체 생성
-	m_VolumeRendering = vtkSmartPointer<vtkVolume>::New();
-	m_VolumeRendering->SetMapper( smartMapper );
-	m_VolumeRendering->SetProperty( volumeProperty );
-	m_VolumeRendering->SetUserTransform( userTransform );
-
-	//렌더링 모드 준비
-	SetCurrentPresetMode( MIP );
-}
-
-void VolumeData::SetCurrentPresetMode( int val )
+void VolumeData::SetCurrentPresetMode(int val)
 {
 	// Volume Rendering 준비 여부
 	if( m_VolumeRendering == NULL ) return;
@@ -81,6 +32,7 @@ void VolumeData::SetCurrentPresetMode( int val )
 	//AfxMessageBox(scalarRange[1]);
 	
 	m_ImageData->GetScalarRange( scalarRange );
+	//m_ImageData->GetPointData()->GetScalars()->GetRange();
 	TRACE1("scalarRange[0] = %lf \n", scalarRange[0]);
 	TRACE1("scalarRange[1] = %lf \n", scalarRange[1]);
 	double nMin= scalarRange[0];
@@ -102,6 +54,7 @@ void VolumeData::SetCurrentPresetMode( int val )
 
 
 		m_OpacityFunc->AddPoint(nMin, 0.0);
+
 		//m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
 		m_OpacityFunc->AddPoint(nMax, 1.0);
 
