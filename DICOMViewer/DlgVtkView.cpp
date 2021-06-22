@@ -49,7 +49,7 @@ BOOL CDlgVtkView::OnInitDialog()
 		m_ScrollBar.Create( SBS_HORZ | SBS_BOTTOMALIGN | WS_CHILD, CRect( 0, 0, 100, 100 ), this, 1 );
 		m_ScrollBar.ShowScrollBar();
 	}
-
+	
 	// Vtk Window »ý¼º
 	DVManager::Mgr()->InitVtkWindow( m_ViewType, GetSafeHwnd() );
 

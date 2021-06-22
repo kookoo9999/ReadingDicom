@@ -16,88 +16,125 @@ VolumeData::~VolumeData()
 void VolumeData::SetCurrentPresetMode(int val)
 {
 	// Volume Rendering 준비 여부
-	if( m_VolumeRendering == NULL ) return;
+	if (m_VolumeRendering == NULL) return;
 
 	// 현재 모드 설정
 	m_CurrentPresetMode = val;
 
 	// Volume Mapper 가져오기
-	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = 
-		vtkSmartVolumeMapper::SafeDownCast( m_VolumeRendering->GetMapper() );
-	if( volumeMapper == NULL ) return;
+	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper =
+		vtkSmartVolumeMapper::SafeDownCast(m_VolumeRendering->GetMapper());
+	if (volumeMapper == NULL) return;
 
 	// 범위
 	double scalarRange[2];
 	//AfxMessageBox(scalarRange[0]);
 	//AfxMessageBox(scalarRange[1]);
-	
-	m_ImageData->GetScalarRange( scalarRange );
-	//m_ImageData->GetPointData()->GetScalars()->GetRange();
+
+	m_ImageData->GetScalarRange(scalarRange);
+
 	TRACE1("scalarRange[0] = %lf \n", scalarRange[0]);
 	TRACE1("scalarRange[1] = %lf \n", scalarRange[1]);
-	double nMin= scalarRange[0];
-	double nMax= scalarRange[1];
+
+	double nMin = scalarRange[0];
+	double nMax = scalarRange[1];
 	TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
 
+	//scalar range max-min 
 	double fTerm = nMax - nMin;
 	double c1_pos = 0.5;
+	//color transFunction addpoint 갯수
+	const int nCountItem_CTF = 4;
+	//color transFunction addpoint 의 x좌표 조절
+	double fbase[nCountItem_CTF];
+	for (int i = 0; i < nCountItem_CTF; i++)
+	{
+		fbase[i] = nMin + fTerm * i * 0.25; // 25% 씩 증가.
+	}
+	double col[nCountItem_CTF][3] =
+	{
+		/*{ 0.0, 0.0, 0.0 },
+		{ 0.7, 0.4, 0.1 },
+		{ 0.6, 0.5, 0.3 },
+		{ 1.0, 1.0, 1.0 }*/
+		{ 0.0, 0.0, 0.0 },
+		{ 0.9, 0.9, 0.9 },
+		{ 0.9, 0.9, 0.9 },
+		{ 1.0, 1.0, 1.0 }
+	};
 
 	// 초기화
 	m_ColorFunc->RemoveAllPoints();
 	m_OpacityFunc->RemoveAllPoints();
-	
+
 	// 투명도 함수 및 컬러 함수 설정
-	switch( m_CurrentPresetMode ) {
+	switch (m_CurrentPresetMode) {
 	case MIP:
 		TRACE("MIP MODE\n");
 		// 최대 밝기값 기준 연속적인 투명도 함수 설정
 
 
-		m_OpacityFunc->AddPoint(nMin, 0.0);
+		m_OpacityFunc->AddPoint(nMin, 0.0); // start	
+		m_OpacityFunc->AddPoint(380.434, 0);
+		m_OpacityFunc->AddPoint(850.220, 0.1);
+		m_OpacityFunc->AddPoint(1536.603, 0.356);
+		m_OpacityFunc->AddPoint(1536.603, 0);
+		m_OpacityFunc->AddPoint(2852.169, 0.581);
+		m_OpacityFunc->AddPoint(3938.941, 0);
+		m_OpacityFunc->AddPoint(7199.257, 0);
+		m_OpacityFunc->AddPoint(7199.257, 1);
+		m_OpacityFunc->AddPoint(nMax, 0.4); // end*/
 
-		//m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
-		m_OpacityFunc->AddPoint(nMax, 1.0);
-
-		/*const int nCountItem_CTF = 4;
-		double fbase[nCountItem_CTF];
+		/*
 		for (int i = 0; i < nCountItem_CTF; i++)
 		{
-			fbase[i] = nMin + fTerm * i * 0.25; // 25% 씩 증가.
+			fbase[i] = nMin + fTerm * i * 0.25; //  25% 씩 증가.
+			//printf("fabase[%d] = %lf\n", i, fbase[i]);
 		}
-		double col[nCountItem_CTF][3] =
-		{
-		{ 0.0, 0.0, 0.0 }, { 0.7, 0.4, 0.1 },
-		{ 0.6, 0.5, 0.3 }, { 1.0, 1.0, 1.0 }
-		};
-	
+
 		for (int i = 0; i < nCountItem_CTF; i++)
 			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);
-			*/
+		*/
+		m_ColorFunc->AddRGBPoint(380.434, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(850.220, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(1536.603, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(2852.169, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(3938.941, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(7199.257, 0.9, 0.9, 0.9);
 
 
-		m_ColorFunc->AddRGBPoint( nMin, 1.0, 1.0, 1.0 );
- 		m_ColorFunc->AddRGBPoint( nMax, 1.0, 1.0, 1.0 );
-			   
+		/*m_ColorFunc->AddRGBPoint( nMin, 1.0, 1.0, 1.0 );
+		m_ColorFunc->AddRGBPoint(nMin, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(335.434, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(850.220, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(1536.603, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(2852.169, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(3938.941, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint(7199.257, 0.9, 0.9, 0.9);
+		m_ColorFunc->AddRGBPoint( nMax, 1.0, 1.0, 1.0 );
+
+		*/
 		/*m_OpacityFunc->AddPoint(nMin, 0.0);
 		m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);
-		m_OpacityFunc->AddPoint(nMax, 1.0);*/
+		 m_OpacityFunc->AddPoint(nMax, 1.0);*/
 
 		// 최대 밝기 모드로 블렌드 모드 설정
-		volumeMapper->SetBlendModeToMaximumIntensity();
+		 //volumeMapper->SetBlendModeToMaximumIntensity();
+		volumeMapper->SetBlendModeToComposite();
 		break;
 	case SKIN:
 		TRACE("SKIN MODE \n");
 		// 피부가 잘 보이는 밝기 값에 대해 색 및 투명도 설정
-		m_ColorFunc->AddRGBPoint( nMin, 0, 0, 0 );
-		m_ColorFunc->AddRGBPoint( -1000, .62, .36, .18 );
-		m_ColorFunc->AddRGBPoint( -500, .88, .60, .29 );
-		m_ColorFunc->AddRGBPoint( nMax, .83, .66, 1 );
+		m_ColorFunc->AddRGBPoint(nMin, 0, 0, 0);
+		m_ColorFunc->AddRGBPoint(-1000, .62, .36, .18);
+		m_ColorFunc->AddRGBPoint(-500, .88, .60, .29);
+		m_ColorFunc->AddRGBPoint(nMax, .83, .66, 1);
 
-		m_OpacityFunc->AddPoint( nMin, 0, 0.5, 0.0 );
-		m_OpacityFunc->AddPoint( -1000, 0, 0.5, 0.0 );
-		m_OpacityFunc->AddPoint( -500, 1.0, 0.33, 0.45 );
-		m_OpacityFunc->AddPoint( nMax, 1.0, 0.5, 0.0 );
-		
+		m_OpacityFunc->AddPoint(nMin, 0, 0.5, 0.0);
+		m_OpacityFunc->AddPoint(-1000, 0, 0.5, 0.0);
+		m_OpacityFunc->AddPoint(-500, 1.0, 0.33, 0.45);
+		m_OpacityFunc->AddPoint(nMax, 1.0, 0.5, 0.0);
+
 		TRACE2("nMin=%lf , nMax=%lf \n", nMin, nMax);
 		//AfxMessageBox(nMin);
 		//AfxMessageBox(nMax);
@@ -106,13 +143,13 @@ void VolumeData::SetCurrentPresetMode(int val)
 		break;
 	case BONE:
 		// 뼈와 혈관이 잘 보이는 밝기 값에 대해 색 및 투명도 설정
-		m_ColorFunc->AddRGBPoint( nMin, 0, 0, 0 );
-		m_ColorFunc->AddRGBPoint( 142.68, 0, 0, 0 );
-		m_ColorFunc->AddRGBPoint( 145.02, 0.62, 0.0, 0.02 );
-		m_ColorFunc->AddRGBPoint( 192.17, 0.91, 0.45, 0.0 );
-		m_ColorFunc->AddRGBPoint( 217.24, 0.97, 0.81, 0.61 );
-		m_ColorFunc->AddRGBPoint( 384.35, 0.91, 0.91, 1.0 );
-		m_ColorFunc->AddRGBPoint( nMax, 1, 1, 1 );
+		m_ColorFunc->AddRGBPoint(nMin, 0, 0, 0);
+		m_ColorFunc->AddRGBPoint(142.68, 0, 0, 0);
+		m_ColorFunc->AddRGBPoint(145.02, 0.62, 0.0, 0.02);
+		m_ColorFunc->AddRGBPoint(192.17, 0.91, 0.45, 0.0);
+		m_ColorFunc->AddRGBPoint(217.24, 0.97, 0.81, 0.61);
+		m_ColorFunc->AddRGBPoint(384.35, 0.91, 0.91, 1.0);
+		m_ColorFunc->AddRGBPoint(nMax, 1, 1, 1);
 		TRACE("BONE MODE \n ");
 		/*const int nCountItem_CTF = 4;
 		double fbase[nCountItem_CTF];
@@ -128,15 +165,15 @@ void VolumeData::SetCurrentPresetMode(int val)
 		// CTF 설정
 		//C_VTK(vtkColorTransferFunction, CTF1);
 		for (int i = 0; i < nCountItem_CTF; i++)
-			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);*/		
+			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);*/
 
-		m_OpacityFunc->AddPoint( nMin, 0.0 );
-		m_OpacityFunc->AddPoint( 142.68, 0.0 );
-		m_OpacityFunc->AddPoint( 145.02, 0.12 );
-		m_OpacityFunc->AddPoint( 192.17, 0.56 );
-		m_OpacityFunc->AddPoint( 217.24, 0.78 );
-		m_OpacityFunc->AddPoint( 384.35, 0.83 );
-		m_OpacityFunc->AddPoint( nMax, 0.83 );
+		m_OpacityFunc->AddPoint(nMin, 0.0);
+		m_OpacityFunc->AddPoint(142.68, 0.0);
+		m_OpacityFunc->AddPoint(145.02, 0.12);
+		m_OpacityFunc->AddPoint(192.17, 0.56);
+		m_OpacityFunc->AddPoint(217.24, 0.78);
+		m_OpacityFunc->AddPoint(384.35, 0.83);
+		m_OpacityFunc->AddPoint(nMax, 0.83);
 
 		/*m_OpacityFunc->AddPoint(nMin, 0.0);
 		m_OpacityFunc->AddPoint(nMin + fTerm * c1_pos, 0.0);

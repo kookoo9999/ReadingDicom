@@ -9,6 +9,8 @@
 #include <vtkInteractorStyleImage.h>
 #include <vtkRendererCollection.h>
 #include <vtkCornerAnnotation.h>
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
 
 #include "DicomLoader.h"
 
@@ -43,7 +45,12 @@ protected:
 	/// 정보 표시
 	vtkSmartPointer<vtkCornerAnnotation> m_Annotation[NUM_VIEW];
 
+	
 public:
+	//orient marker
+	vtkSmartPointer<vtkOrientationMarkerWidget> m_orientMarker;
+
+
 	/// Vtk Render Windows
 	vtkSmartPointer<vtkRenderWindow> GetVtkWindow( int viewType );
 

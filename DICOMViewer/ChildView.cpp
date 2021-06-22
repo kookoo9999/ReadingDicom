@@ -106,10 +106,10 @@ void CChildView::OnSize( UINT nType, int cx, int cy )
 	yPos[2] = rect.bottom;
 
 	CRect subRect[4];
-	subRect[0] = CRect( xPos[0], yPos[0], xPos[1], yPos[1] ); // Axial 위치
-	subRect[1] = CRect( xPos[1], yPos[0], xPos[2], yPos[1] ); // Coronal 위치
-	subRect[2] = CRect( xPos[0], yPos[1], xPos[1], yPos[2] ); // Sagittal 위치
-	subRect[3] = CRect( xPos[1], yPos[1], xPos[2], yPos[2] ); // 3D View 위치
+	subRect[0] = CRect( xPos[0], yPos[0], xPos[1], yPos[1] ); // Axial 위치 좌상
+	subRect[1] = CRect( xPos[1], yPos[0], xPos[2], yPos[1] ); // Coronal 위치 우상
+	subRect[2] = CRect( xPos[0], yPos[1], xPos[1], yPos[2] ); // Sagittal 위치 좌하
+	subRect[3] = CRect( xPos[1], yPos[1], xPos[2], yPos[2] ); // 3D View 위치 우하
 
 	// Vtk Window 배치
 	for( int viewType = 0; viewType < 4; viewType++ ) {

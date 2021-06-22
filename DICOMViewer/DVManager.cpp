@@ -48,14 +48,19 @@ void DVManager::InitVtkWindow( int viewType, void* hWnd )
 	// vtk Render Window 생성
 	if( m_vtkWindow[viewType] == NULL ) {
 		// Interactor 생성
-		vtkSmartPointer<vtkRenderWindowInteractor> interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+		vtkSmartPointer<vtkRenderWindowInteractor> interactor = 
+			vtkSmartPointer<vtkRenderWindowInteractor>::New();
 
 		// Renderer 생성
-		vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+		vtkSmartPointer<vtkRenderer> renderer = 
+			vtkSmartPointer<vtkRenderer>::New();
 		renderer->SetBackground( 0.0, 0.0, 0.0 );					// 검은색 배경
 
 		// 3D View 설정
 		if( viewType == VIEW_3D ) {
+
+			
+
 			// Trackball Camera 인터랙션 스타일 적용
 			interactor->SetInteractorStyle( vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New() );
 
@@ -63,6 +68,8 @@ void DVManager::InitVtkWindow( int viewType, void* hWnd )
 			camera->ParallelProjectionOn();				// Parallel Projection 모드
 			camera->SetPosition( 0.0, -1.0, 0.0 );		// 카메라 위치
 			camera->SetViewUp( 0.0, 0.0, 1.0 );			// 카메라 Up 벡터
+
+			
 		}
 		// 2D View 설정
 		else {
@@ -71,6 +78,7 @@ void DVManager::InitVtkWindow( int viewType, void* hWnd )
 
 			vtkSmartPointer<vtkCamera> camera = renderer->GetActiveCamera();
 			camera->ParallelProjectionOn();				// Parallel Projection 모드
+			
 			camera->SetPosition( 0.0, 0.0, -1.0 );		// 카메라 위치
 			camera->SetViewUp( 0.0, -1.0, 0.0 );			// 카메라 Up 벡터
 		}
@@ -81,6 +89,17 @@ void DVManager::InitVtkWindow( int viewType, void* hWnd )
 		m_vtkWindow[viewType]->SetInteractor( interactor );
 		m_vtkWindow[viewType]->AddRenderer( renderer );
 		m_vtkWindow[viewType]->Render();
+
+		if (m_vtkWindow[VIEW_3D]) {
+			vtkSmartPointer<vtkAxesActor> axesActor = vtkSmartPointer<vtkAxesActor>::New();
+			m_orientMarker = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+			m_orientMarker->SetOrientationMarker(axesActor);
+			m_orientMarker->SetCurrentRenderer(renderer);
+			m_orientMarker->SetInteractor(interactor);
+			m_orientMarker->SetViewport(0.8, 0.0, 1.0, 0.2);
+			m_orientMarker->SetEnabled(1);
+			m_orientMarker->InteractiveOff();
+		}
 	}
 }
 
@@ -153,7 +172,7 @@ void DVManager::ClearVolumeDisplay()
 	for( int viewType = VIEW_AXIAL; viewType <= VIEW_SAGITTAL; viewType++ ) {
 		GetRenderer( viewType )->RemoveActor( volumeData->GetSliceActor( viewType ) );
 	}
-}
+}        
 
 void DVManager::UpdateVolumeDisplay()
 {
