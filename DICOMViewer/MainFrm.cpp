@@ -262,7 +262,7 @@ void CMainFrame::OnOpenDicomFolder()
 
 	if( IDOK == folderDlg.DoModal() ) {
 		/// DICOM 파일이 포함된 폴더 경로
-		CString path = folderDlg.GetPathName();
+		path = folderDlg.GetPathName();
 
 		/// 폴더내의 DICOM(*.dcm)파일 읽기
 		DVManager::Mgr()->GetDicomLoader()

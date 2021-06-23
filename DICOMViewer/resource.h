@@ -52,13 +52,17 @@
 #define ID_OPEN_DICOM_FOLDER            32772
 #define ID_COMBO_VOLUME_RENDER_MODE     32773
 #define ID_VIEW_SCA                     32774
+#define ID_SLIDER2                      32776
+#define ID_SLIDER_RZ                    32776
+#define ID_SLIDER_RX                    32777
+#define ID_SLIDER_RY                    32778
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        327
-#define _APS_NEXT_COMMAND_VALUE         32775
+#define _APS_NEXT_COMMAND_VALUE         32779
 #define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

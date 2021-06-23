@@ -79,54 +79,8 @@ public:
 	vtkSmartPointer<vtkVolume> GetVolumeRendering() const { return m_VolumeRendering; }
 
 	/// 3D Volume 렌더링 준비
-	void ReadyForVolumeRendering()
-	{
-		// Volume Mapper 준비
-		vtkSmartPointer<vtkSmartVolumeMapper> smartMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
-		smartMapper->SetInputData(m_ImageData);
-		//double *fMinMax = m_ImageData->GetPointData()->GetScalars()->GetRange();
-		// 투명도 함수, 컬러 함수 준비
-		double scalarRange[2];
-		m_ImageData->GetScalarRange(scalarRange);
-		TRACE2("scalar[0] = %lf scalar[1] = %lf \n", scalarRange[0], scalarRange[1]);
-		m_OpacityFunc = vtkSmartPointer<vtkPiecewiseFunction>::New();
-		//m_OpacityFunc->AdjustRange( scalarRange );
-		m_ColorFunc = vtkSmartPointer<vtkColorTransferFunction>::New();
-
-		// Volume 속성 준비
-		vtkSmartPointer<vtkVolumeProperty> volumeProperty =
-			vtkSmartPointer<vtkVolumeProperty>::New();
-
-		volumeProperty->SetColor(0, m_ColorFunc);
-		volumeProperty->ShadeOn();
-		volumeProperty->SetInterpolationTypeToLinear();
-
-		//0616 수정
-		volumeProperty->SetDiffuse(0.7);
-		volumeProperty->SetSpecular(0.3);
-		volumeProperty->SetSpecularPower(30.0);
-		volumeProperty->SetScalarOpacity(0, m_OpacityFunc);
-
-
-		// Volume 회전 변환 
-		double origin[3];
-		m_ImageData->GetOrigin(origin);
-		vtkSmartPointer<vtkTransform> userTransform =
-			vtkSmartPointer<vtkTransform>::New();
-		userTransform->Translate(origin);
-		userTransform->Concatenate(GetOrientation());
-		userTransform->Translate(-origin[0], -origin[1], -origin[2]);
-		userTransform->Update();
-
-		// Volume 렌더링 객체 생성
-		m_VolumeRendering = vtkSmartPointer<vtkVolume>::New();
-		m_VolumeRendering->SetMapper(smartMapper);
-		m_VolumeRendering->SetProperty(volumeProperty);
-		m_VolumeRendering->SetUserTransform(userTransform);
-
-		//렌더링 모드 준비
-		SetCurrentPresetMode(MIP);
-	}
+	void ReadyForVolumeRendering();
+	
 	
 	/// 현재 Volume 렌더링 모드
 	int GetCurrentPresetMode() const { return m_CurrentPresetMode; }
