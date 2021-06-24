@@ -292,3 +292,29 @@ void DVManager::UpdateSliceAnnotation( int viewType )
 	// 오른쪽 위 코너 (인덱스 3) 정보 표시
 	m_Annotation[viewType]->SetText( 3, rightTopText.c_str() );
 }
+
+void DVManager::OpenDicom()
+{
+	vtkSmartPointer<DicomGroup> group = GetDicomLoader()->GetCurrentGroup();
+	// 렌더링 초기화
+	ClearVolumeDisplay();
+
+	// 선택된 DICOM 그룹에서 Volume 데이터 로드
+	GetDicomLoader()->LoadVolumeData(group);
+
+	// 정보 표시 업데이트
+	UpdateAnnotation();
+
+	// Volume 데이터 렌더링 업데이트
+	UpdateVolumeDisplay();
+
+	// 기본 View 윈도우 얻기
+	CChildView* mainView = ((CMainFrame*)AfxGetMainWnd())->GetWndView();
+	if (mainView == NULL) return;
+
+	// 2D View 스크롤 바 업데이트
+	for (int viewType = VIEW_AXIAL; viewType <= VIEW_SAGITTAL; viewType++) {
+		mainView->GetDlgVtkView(viewType)->UpdateScrollBar();
+	}
+}
+

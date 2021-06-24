@@ -86,5 +86,7 @@ public:
 
 	/// DICOM 슬라이스 정보 표시
 	void UpdateSliceAnnotation( int viewType );
+
+	void OpenDicom();
 };
 

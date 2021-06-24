@@ -14,6 +14,7 @@
 
 #include "stdafx.h"
 #include "DICOMViewer.h"
+#include "VolumeData.h"
 
 #include "MainFrm.h"
 #include "DVManager.h"
@@ -262,7 +263,8 @@ void CMainFrame::OnOpenDicomFolder()
 
 	if( IDOK == folderDlg.DoModal() ) {
 		/// DICOM 파일이 포함된 폴더 경로
-		CString path = folderDlg.GetPathName();
+	
+	CString path = folderDlg.GetPathName();
 
 		/// 폴더내의 DICOM(*.dcm)파일 읽기
 		DVManager::Mgr()->GetDicomLoader()
@@ -271,7 +273,9 @@ void CMainFrame::OnOpenDicomFolder()
 		/// DICOM 그룹 트리 업데이트
 		m_DicomGroupView.UpdateDicomTree();
 
-
+		DVManager::Mgr()->OpenDicom();
+		
+	
 	}
 }
 
@@ -296,4 +300,60 @@ void CMainFrame::OnViewSca()
 {
 	
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	VolumeData::ActionView();
+	/*vtkSmartPointer<vtkLookupTable> bwLut = vtkSmartPointer<vtkLookupTable>::New();
+	bwLut->SetTableRange(0, 256);
+	bwLut->SetSaturationRange(0, 0);
+	bwLut->SetHueRange(0, 0);
+	bwLut->SetValueRange(0, 3);
+	bwLut->Build(); //effective built
+
+	vtkSmartPointer<vtkCamera> sagCamera = vtkSmartPointer<vtkCamera>::New();
+	sagCamera->SetViewUp(0, 0, -1);
+	sagCamera->SetPosition(-1, 0, 0);
+	sagCamera->SetFocalPoint(0, 0, 0);
+	sagCamera->ComputeViewPlaneNormal();
+	sagCamera->Azimuth(0.0);
+	sagCamera->Elevation(0.0);
+
+	vtkSmartPointer<vtkCamera> corCamera = vtkSmartPointer<vtkCamera>::New();
+	corCamera->SetViewUp(0, -1, 0);
+	corCamera->SetPosition(0, -1, 0);
+	corCamera->SetFocalPoint(0, 0, 0);
+	corCamera->ComputeViewPlaneNormal();
+	corCamera->Azimuth(0.0);
+	corCamera->Elevation(0.0);
+
+	vtkSmartPointer<vtkCamera> axiCamera = vtkSmartPointer<vtkCamera>::New();
+	axiCamera->SetViewUp(0, 0, -1);
+	axiCamera->SetPosition(0, 0, -1);
+	axiCamera->SetFocalPoint(0, 0, 0);
+	axiCamera->ComputeViewPlaneNormal();
+	axiCamera->Azimuth(0.0);
+	axiCamera->Elevation(0.0);
+
+	vtkSmartPointer<vtkImageMapToColors> sagittalColors2 = vtkSmartPointer<vtkImageMapToColors>::New();
+
+	/*
+	sagittalColors2->SetInputConnection(m_VolumeSlice[1]);
+	sagittalColors2->SetLookupTable(bwLut);
+	sagittalColors2->Update();
+
+	vtkSmartPointer<vtkImageActor> sagittal2 = vtkSmartPointer<vtkImageActor>::New();
+	sagittal2->GetMapper()->SetInputConnection(sagittalColors2->GetOutputPort());
+	sagittal2->SetDisplayExtent(sag_num_A, sag_num_A, 0, cor_num_max, 0, axi_num_max);
+	sagittal2->ForceOpaqueOn();
+
+	vtkSmartPointer<vtkRenderer> aRenderer_Sag = vtkSmartPointer<vtkRenderer>::New();
+	aRenderer_Sag->AddActor(sagittal2);
+	m_vtkRenderSagital->AddRenderer(aRenderer_Sag);
+	m_vtkRenderSagital->Render();
+
+	aRenderer_Sag->SetActiveCamera(sagCamera);
+	aRenderer_Sag->ResetCamera();
+	sagCamera->Dolly(1.5);
+
+
+	aRenderer_Sag->ResetCamera();
+	m_vtkRenderSagital->Render();*/
 }

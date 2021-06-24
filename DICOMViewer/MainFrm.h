@@ -15,7 +15,8 @@
 #pragma once
 #include "ChildView.h"
 #include "DicomGroupView.h"
-
+#include <vtkLookupTable.h>
+#include <vtkImageMapToColors.h>
 class CMainFrame : public CFrameWndEx
 {
 	
@@ -50,6 +51,7 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	CChildView    m_wndView;
 	CDicomGroupView m_DicomGroupView;
+	vtkSmartPointer<vtkLookupTable> bwLut;
 
 public:
 	/// 기본 View 윈도우
