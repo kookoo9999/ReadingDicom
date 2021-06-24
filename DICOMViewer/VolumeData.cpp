@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "VolumeData.h"
-#include "DVManager.h"
-#include "MainFrm.h"
+
 VolumeData::VolumeData()
 {
 	m_CurrentPresetMode = MIP;
@@ -13,6 +12,7 @@ VolumeData::VolumeData()
 VolumeData::~VolumeData()
 {
 }
+
 void VolumeData::ReadyForVolumeRendering()
 {
 	// Volume Mapper 준비
@@ -61,6 +61,7 @@ void VolumeData::ReadyForVolumeRendering()
 	//렌더링 모드 준비
 	SetCurrentPresetMode(MIP);
 }
+
 void VolumeData::SetCurrentPresetMode(int val)
 {
 	// Volume Rendering 준비 여부
@@ -133,7 +134,7 @@ void VolumeData::SetCurrentPresetMode(int val)
 		m_OpacityFunc->AddPoint(7199.257, 1);
 		m_OpacityFunc->AddPoint(nMax, 0.4); // end*/
 
-		
+		/*
 		for (int i = 0; i < nCountItem_CTF; i++)
 		{
 			fbase[i] = nMin + fTerm * i * 0.25; //  25% 씩 증가.
@@ -142,13 +143,13 @@ void VolumeData::SetCurrentPresetMode(int val)
 
 		for (int i = 0; i < nCountItem_CTF; i++)
 			m_ColorFunc->AddRGBPoint(fbase[i], col[i][0], col[i][1], col[i][2]);
-		
-		/*m_ColorFunc->AddRGBPoint(380.434, 0.9, 0.9, 0.9);
+		*/
+		m_ColorFunc->AddRGBPoint(380.434, 0.9, 0.9, 0.9);
 		m_ColorFunc->AddRGBPoint(850.220, 0.9, 0.9, 0.9);
 		m_ColorFunc->AddRGBPoint(1536.603, 0.9, 0.9, 0.9);
 		m_ColorFunc->AddRGBPoint(2852.169, 0.9, 0.9, 0.9);
 		m_ColorFunc->AddRGBPoint(3938.941, 0.9, 0.9, 0.9);
-		m_ColorFunc->AddRGBPoint(7199.257, 0.9, 0.9, 0.9);*/
+		m_ColorFunc->AddRGBPoint(7199.257, 0.9, 0.9, 0.9);
 
 
 		/*m_ColorFunc->AddRGBPoint( nMin, 1.0, 1.0, 1.0 );
@@ -169,7 +170,6 @@ void VolumeData::SetCurrentPresetMode(int val)
 		// 최대 밝기 모드로 블렌드 모드 설정
 		 //volumeMapper->SetBlendModeToMaximumIntensity();
 		volumeMapper->SetBlendModeToComposite();
-		volumeMapper->SetRequestedRenderModeToDefault();
 		break;
 	case SKIN:
 		TRACE("SKIN MODE \n");
@@ -419,117 +419,3 @@ void VolumeData::SetSliceIndex( int sliceType, int sliceIndex )
 		GetResliceMatrix( sliceType, m_SliceIndex[sliceType] ) );
 	m_VolumeSlice[sliceType]->Update();
 }
-
-/*void VolumeData::ActionView()
-{
-	BOOL bRotation = TRUE;
-
-	
-	vtkSmartPointer<vtkImageActor> sagittal = 
-		vtkSmartPointer<vtkImageActor>::New();
-	vtkSmartPointer<vtkImageActor> axial = 
-		vtkSmartPointer<vtkImageActor>::New();
-	vtkSmartPointer<vtkImageActor> coronal = 
-		vtkSmartPointer<vtkImageActor>::New();
-	vtkSmartPointer<vtkDICOMImageReader> reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-	CMainFrame mf;
-	const char* dest;
-	CString strInitPath = _T("D:\\user2\\Desktop\\DICOM\\");
-	CFolderPickerDialog Picker(strInitPath, OFN_FILEMUSTEXIST, NULL, 0);
-	reader->SetDirectoryName(dest);
-	reader->Update();
-
-	double renderer_bounds[6];
-	DVManager::Mgr()->GetRenderer(DVManager::VIEW_3D)->ComputeVisiblePropBounds(renderer_bounds);
-
-	int axial_num_max = renderer_bounds[5] / reader->GetPixelSpacing()[2];
-	int coronal_num_max = renderer_bounds[1] / reader->GetPixelSpacing()[0];
-	int sag_num_max = renderer_bounds[3] / reader->GetPixelSpacing()[1];
-
-	int sag_num_A = (int)sag_num_max / 2;
-	int coronal_num_A = (int)coronal_num_max / 2;
-	int axial_num_A = (int)axial_num_max / 2;
-
-	// Now we are creating three orthogonal planes passing through the
-		// volume. Each plane uses a different texture map and therefore has
-		// different coloration.
-
-
-		// Start by creating a black/white lookup table.
-	vtkSmartPointer<vtkLookupTable> bwLut = vtkSmartPointer<vtkLookupTable>::New();
-	bwLut->SetTableRange(0, 2000);
-	bwLut->SetSaturationRange(0, 0);
-	bwLut->SetHueRange(0, 0);
-	bwLut->SetValueRange(0, 1);
-	bwLut->Build(); //effective built
-
-	// Now create a lookup table that consists of the full hue circle (from HSV).
-	vtkSmartPointer<vtkLookupTable> hueLut = vtkSmartPointer<vtkLookupTable>::New();
-	hueLut->SetTableRange(0, 2000);
-	hueLut->SetHueRange(0, 1);
-	hueLut->SetSaturationRange(1, 1);
-	hueLut->SetValueRange(1, 1);
-	hueLut->Build(); //effective built
-
-	// Finally, create a lookup table with a single hue but having a range in the saturation of the hue.
-	vtkSmartPointer<vtkLookupTable> satLut = vtkSmartPointer<vtkLookupTable>::New();
-	satLut->SetTableRange(0, 2000);
-	satLut->SetHueRange(.6, .6);
-	satLut->SetSaturationRange(0, 1);
-	satLut->SetValueRange(1, 1);
-	satLut->Build(); //effective built
-
-	// Create the first of the three planes. The filter vtkImageMapToColors
-	// maps the data through the corresponding lookup table created above.  The
-	// vtkImageActor is a type of vtkProp and conveniently displays an image on
-	// a single quadrilateral plane. It does this using texture mapping and as
-	// a result is quite fast. (Note: the input image has to be unsigned char
-	// values, which the vtkImageMapToColors produces.) Note also that by
-	// specifying the DisplayExtent, the pipeline requests data of this extent
-	// and the vtkImageMapToColors only processes a slice of data.
-	vtkSmartPointer<vtkImageMapToColors> sagittalColors = vtkSmartPointer<vtkImageMapToColors>::New();
-
-	
-	sagittalColors->SetInputConnection(m_VolumeSlice[2]->GetOutputPort());
-	sagittalColors->SetLookupTable(bwLut);
-	sagittalColors->Update();
-
-	//		vtkSmartPointer<vtkImageActor> sagittal = vtkSmartPointer<vtkImageActor>::New();
-	sagittal->GetMapper()->SetInputConnection(sagittalColors->GetOutputPort());
-	sagittal->SetDisplayExtent(sag_num_A, sag_num_A, 0, coronal_num_max, 0, axial_num_max);
-	sagittal->ForceOpaqueOn();
-
-	// Create the second (axial) plane of the three planes. We use the
-	// same approach as before except that the extent differs.
-	vtkSmartPointer<vtkImageMapToColors> axialColors = vtkSmartPointer<vtkImageMapToColors>::New();
-
-	if (bRotation)
-		axialColors->SetInputConnection(m_VolumeSlice[0]->GetOutputPort());
-	else
-		axialColors->SetInputConnection(reader->GetOutputPort());
-
-	axialColors->SetLookupTable(hueLut);
-	axialColors->Update();
-
-	//		vtkSmartPointer<vtkImageActor> axial = vtkSmartPointer<vtkImageActor>::New();
-	axial->GetMapper()->SetInputConnection(axialColors->GetOutputPort());
-	axial->SetDisplayExtent(0, sag_num_max, 0, coronal_num_max, axial_num_A, axial_num_A);
-	axial->ForceOpaqueOn();
-
-	// Create the third (coronal) plane of the three planes. We use
-	// the same approach as before except that the extent differs.
-	vtkSmartPointer<vtkImageMapToColors> coronalColors = vtkSmartPointer<vtkImageMapToColors>::New();
-
-	if (bRotation)
-		coronalColors->SetInputConnection(m_VolumeSlice[1]->GetOutputPort());
-	else
-		coronalColors->SetInputConnection(reader->GetOutputPort());
-
-	coronalColors->SetLookupTable(satLut);
-	coronalColors->Update();
-
-	//		vtkSmartPointer<vtkImageActor> coronal = vtkSmartPointer<vtkImageActor>::New();
-	coronal->GetMapper()->SetInputConnection(coronalColors->GetOutputPort());
-	coronal->SetDisplayExtent(0, sag_num_max, coronal_num_A, coronal_num_A, 0, axial_num_max);
-	coronal->ForceOpaqueOn();
-}*/

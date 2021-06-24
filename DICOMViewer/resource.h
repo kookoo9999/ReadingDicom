@@ -5,7 +5,6 @@
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
 #define IDD_VTK_VIEW                    101
-//#define IDD_VTK_VIE                     101
 #define IDB_WRITESMALL                  110
 #define IDB_WRITELARGE                  111
 #define IDB_MAIN                        112
@@ -53,16 +52,17 @@
 #define ID_OPEN_DICOM_FOLDER            32772
 #define ID_COMBO_VOLUME_RENDER_MODE     32773
 #define ID_VIEW_SCA                     32774
-#define ID_SLIDER_RZ                    32775
-#define ID_SLIDER_RX                    32778
-#define ID_SLIDER_RY                    32779
+#define ID_SLIDER2                      32776
+#define ID_SLIDER_RZ                    32776
+#define ID_SLIDER_RX                    32777
+#define ID_SLIDER_RY                    32778
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        327
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32779
 #define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
