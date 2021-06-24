@@ -132,6 +132,8 @@ void DicomLoader::LoadVolumeData( vtkSmartPointer<DicomGroup> dicomGroup )
 	// GDCM Image Reader를 이용하여 DICOM 이미지 로딩
 	vtkSmartPointer<vtkGDCMImageReader> dcmReader = 
 		vtkSmartPointer<vtkGDCMImageReader>::New();	
+	
+
 	// 이미지를 아래에서 위로 읽음
 	dcmReader->FileLowerLeftOn();
 	// 파일 목록이 1개 이상
