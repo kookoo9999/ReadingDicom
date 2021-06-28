@@ -125,15 +125,16 @@ void DicomLoader::LoadVolumeData( vtkSmartPointer<DicomGroup> dicomGroup )
 	else sortedFileNames = dicomGroup->GetFileList();
 
 	// vtkStringArray 타입으로 변환
-	vtkSmartPointer<vtkStringArray> fileArray = vtkSmartPointer<vtkStringArray>::New();
+	vtkSmartPointer<vtkStringArray> fileArray = 
+		vtkSmartPointer<vtkStringArray>::New();
 	for( int i = 0; i < (int)sortedFileNames.size(); i++ ) 
 		fileArray->InsertNextValue( sortedFileNames[i].c_str() );
 
 	// GDCM Image Reader를 이용하여 DICOM 이미지 로딩
-	vtkSmartPointer<vtkGDCMImageReader> dcmReader = 
-		vtkSmartPointer<vtkGDCMImageReader>::New();	
+	dcmReader = vtkSmartPointer<vtkGDCMImageReader>::New();
+	vtkSmartPointer<vtkDICOMImageReader> dicom = vtkSmartPointer<vtkDICOMImageReader>::New();
 	
-
+	
 	// 이미지를 아래에서 위로 읽음
 	dcmReader->FileLowerLeftOn();
 	// 파일 목록이 1개 이상
@@ -155,6 +156,7 @@ void DicomLoader::LoadVolumeData( vtkSmartPointer<DicomGroup> dicomGroup )
 		spacing[2] = ippSorter.GetZSpacing();
 		m_VolumeData->GetImageData()->SetSpacing( spacing );
 	}
+	
 
 	// Volume 렌더링 준비
 	m_VolumeData->ReadyForVolumeRendering();

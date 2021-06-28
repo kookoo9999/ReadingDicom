@@ -5,7 +5,7 @@
 
 #include <vtkObject.h>
 #include <vtkSmartPointer.h>
-
+#include <vtkGDCMImageReader.h>
 #include "DicomGroup.h"
 #include "VolumeData.h"
 
@@ -31,6 +31,8 @@ protected:
 	vtkSmartPointer<VolumeData> m_VolumeData;
 
 public:
+	vtkSmartPointer<vtkGDCMImageReader> dcmReader;
+
 	/// DICOM 디렉토리 열기
 	void OpenDicomDirectory( const char* dirPath );
 
