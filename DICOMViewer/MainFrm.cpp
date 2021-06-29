@@ -289,6 +289,7 @@ void CMainFrame::OnComboVolumeRenderMode()
 
 	// Volume 렌더링 모드 변경
 	DVManager::Mgr()->ChangeVolumeRenderMode( selectedIdx );
+	
 }
 
 

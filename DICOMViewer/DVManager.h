@@ -47,7 +47,7 @@ protected:
 
 	
 public:
-	//orient marker
+	//orient marker widget 
 	vtkSmartPointer<vtkOrientationMarkerWidget> m_orientMarker;
 
 

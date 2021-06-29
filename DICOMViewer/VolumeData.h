@@ -17,7 +17,8 @@
 #include <vtkImageMapToColors.h>
 #include <vtkLookupTable.h>
 #include <vtkDICOMImageReader.h>
-
+#include <vtkImageActor.h>
+#include <vtkLookupTable.h>
 class VolumeData :
 	public vtkObject
 {

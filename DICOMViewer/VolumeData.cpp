@@ -350,6 +350,8 @@ vtkSmartPointer<vtkMatrix4x4> VolumeData::GetResliceMatrix( int sliceType, int s
 	m_ImageData->GetBounds( bounds );				// Volume 위치 범위
 	m_ImageData->GetExtent( ext );					// Volume 인덱스 범위
 
+	//0628
+
 	for (int i = 0; i < 3; i++) { 
 		TRACE2("origin[%d] = %lf \n",i, origin[i]);
 		/*TRACE1("origin[0] = %lf \n",  origin[0]); 
