@@ -113,4 +113,8 @@ public:
 	void SetSliceIndex( int sliceType, int sliceIndex );
 
 	static void ActionView();
+
+	
+
+
 };

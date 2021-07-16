@@ -158,7 +158,7 @@ void CDlgVtkView::UpdateScrollBar()
 	vtkSmartPointer<VolumeData> volumeData = 
 		DVManager::Mgr()->GetDicomLoader()->GetVolumeData();
 	if( volumeData == NULL ) return;
-
+	
 	// Volume 이미지의 인덱스 범위 
 	int ext[6];
 	volumeData->GetImageData()->GetExtent( ext );

@@ -1,6 +1,4 @@
 ﻿
-DICOMViewer 프로젝트
-(교재 4장 예제)
 
 포함된 기능 
 - DICOM 폴더 읽기
@@ -10,6 +8,7 @@ DICOMViewer 프로젝트
 - Axial, Coronal, Sagittal 방향 슬라이스 이미지 생성
 - 스크롤 바를 통한 슬라이스 탐색
 - 3D Volume Rendering
+- 3D Axes View
 
 
 

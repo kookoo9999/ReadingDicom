@@ -5,6 +5,8 @@
 #include "MainFrm.h"
 #include "ChildView.h"
 
+
+
 //to detect memory leak
 #ifdef _DEBUG
 #define new DEBUG_NEW
