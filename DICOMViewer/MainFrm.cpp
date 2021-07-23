@@ -35,7 +35,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI( ID_VIEW_DICOM_GROUP, &CMainFrame::OnUpdateViewDicomGroup )
 	ON_COMMAND( ID_OPEN_DICOM_FOLDER, &CMainFrame::OnOpenDicomFolder )
 	ON_COMMAND( ID_COMBO_VOLUME_RENDER_MODE, &CMainFrame::OnComboVolumeRenderMode )
-	ON_COMMAND(ID_VIEW_SCA, &CMainFrame::OnViewSca)
+//	ON_COMMAND(ID_VIEW_SCA, &CMainFrame::OnViewSca)
+//	ON_UPDATE_COMMAND_UI(ID_VIEW_SCA, &CMainFrame::OnUpdateViewSca)
 END_MESSAGE_MAP()
 
 // CMainFrame 생성/소멸
@@ -293,8 +294,3 @@ void CMainFrame::OnComboVolumeRenderMode()
 }
 
 
-void CMainFrame::OnViewSca()
-{
-	
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-}

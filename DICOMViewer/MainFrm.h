@@ -51,6 +51,7 @@ protected:  // 컨트롤 모음이 포함된 멤버입니다.
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	CChildView    m_wndView;
 	CDicomGroupView m_DicomGroupView;
+	
 	vtkSmartPointer<vtkLookupTable> bwLut;
 
 public:
@@ -71,7 +72,7 @@ public:
 	afx_msg void OnUpdateViewDicomGroup( CCmdUI *pCmdUI );
 	afx_msg void OnOpenDicomFolder();
 	afx_msg void OnComboVolumeRenderMode();
-	afx_msg void OnViewSca();
+
 };
 
 

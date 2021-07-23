@@ -161,7 +161,9 @@ void CDlgVtkView::UpdateScrollBar()
 	
 	// Volume 이미지의 인덱스 범위 
 	int ext[6];
+	
 	volumeData->GetImageData()->GetExtent( ext );
+	
 
 	// 슬라이스 타입에 다른 스크롤 바 범위 설정
 	switch( m_ViewType ) {
@@ -176,6 +178,7 @@ void CDlgVtkView::UpdateScrollBar()
 		break;
 	}
 
+	
 	// 스크롤 바 위치 설정
 	m_ScrollBar.SetScrollPos( volumeData->GetSliceIndex( m_ViewType ) );
 }

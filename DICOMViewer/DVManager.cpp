@@ -92,6 +92,7 @@ void DVManager::InitVtkWindow( int viewType, void* hWnd )
 		m_vtkWindow[viewType]->AddRenderer( renderer );
 		m_vtkWindow[viewType]->Render();
 
+		// 3D Render View의 Axes Actor 추가
 		if (m_vtkWindow[VIEW_3D]) {
 			vtkSmartPointer<vtkAxesActor> axesActor = vtkSmartPointer<vtkAxesActor>::New();
 			m_orientMarker = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
@@ -182,16 +183,24 @@ void DVManager::UpdateVolumeDisplay()
 	vtkSmartPointer<VolumeData> volumeData = GetDicomLoader()->GetVolumeData();
 	if( volumeData == NULL ) return;
 
+	
+	//for (int viewType = VIEW_AXIAL; viewType <= VIEW_SAGITTAL; viewType++) {
+	//	GetRenderer(VIEW_3D)->AddActor(volumeData->GetSliceActor(VIEW_AXIAL));
+	//}
+
 	// 3D 뷰에 볼륨 렌더링 추가
 	GetRenderer( VIEW_3D )->AddViewProp( volumeData->GetVolumeRendering() );
+	//GetRenderer(VIEW_3D)->AddActor2D(volumeData->GetSliceActor(VIEW_AXIAL));
 	GetRenderer( VIEW_3D )->ResetCamera();	// 카메라 재설정
 	m_vtkWindow[VIEW_3D]->Render();			// 화면 갱신
 	
 	// 슬라이스 뷰에 각 슬라이스 Actor 추가
 	for( int viewType = VIEW_AXIAL; viewType <= VIEW_SAGITTAL; viewType++ ) {
+		GetRenderer(VIEW_3D)->AddViewProp(volumeData->GetSliceActor(viewType));
 		GetRenderer( viewType )->AddActor( volumeData->GetSliceActor( viewType ) );
 		GetRenderer( viewType )->ResetCamera();	// 카메라 재설정
 		m_vtkWindow[viewType]->Render();			// 화면 갱신
+		m_vtkWindow[VIEW_3D]->Render();
 	}
 }
 
@@ -203,7 +212,7 @@ void DVManager::ScrollSliceIndex( int viewType, int pos )
 
 	// Volume 이미지의 인덱스 설정
 	volumeData->SetSliceIndex( viewType, pos );
-
+	   
 	// 정보 표시 업데이트
 	UpdateAnnotation();
 
